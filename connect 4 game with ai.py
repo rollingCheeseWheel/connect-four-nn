@@ -120,7 +120,7 @@ while running:
 
                 if PLAY_AGAINST_AI:
                     if player == 2: #ai player
-                        pred = model.forward([cell for row in board for cell in row])
+                        pred = model.forward([cell for row in board for cell in row] + [player])
                         maxPred = numpy.max(pred)
                         bestCol = [i for i in range(pred.__len__()) if pred[i] == maxPred][0]
                         change_value_row(bestCol, player)

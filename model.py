@@ -252,26 +252,28 @@ class Model:
 if __name__ == "__main__":
     import pandas, time
     layers = [
-        Layer(84, 42, Activation(Function.RELU)),
-        Layer(48, 84, Activation(Function.RELU)),
+        Layer(86, 43, Activation(Function.RELU)),
+        Layer(48, 86, Activation(Function.RELU)),
         Layer(7, 48, Activation(Function.SOFTMAX))
     ]
     model = Model(layers)
     model.learningRate = 0.001
 
-    trainDataFrame = pandas.read_csv("GC4BStates.csv")
-    MODEL_SAVE_LOCATION = "connectFour3Layered.pickle"
+    trainDataFrame = pandas.read_csv("cSharp ai trainer/datasetGen/datasetGen/bin/Debug/net9.0/exported.csv")
+    MODEL_SAVE_LOCATION = "csharptrained.pickle"
 
     START_START_TIME = time.time()
     for _ in range(100):
         START_TIME = time.time()
-        for i in range(trainDataFrame.__len__()):
+        for i, row in trainDataFrame.iterrows():
             if i == 0:
                 continue
-            rowEntry = trainDataFrame.loc[i].values
-            input = rowEntry[1:-1]
+            rowEntry = row.values
+            input = rowEntry[0:-1]
             bestCol = rowEntry[-1]
 
+            # Generate target output
+            # the best column gets a high value, the rest random low values
             target = numpy.random.rand(7)
             target[bestCol] += 25
             target = Function.SOFTMAX(target)
