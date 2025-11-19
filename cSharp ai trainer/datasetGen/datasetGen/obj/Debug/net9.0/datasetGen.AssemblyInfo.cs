@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("datasetGen")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+321e669cb9ec7d9ee6bdabb6d4f5ae9c9386869a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6b8a40236892c49f4611d51d64a3ed0b7371145")]
 [assembly: System.Reflection.AssemblyProductAttribute("datasetGen")]
 [assembly: System.Reflection.AssemblyTitleAttribute("datasetGen")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

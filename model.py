@@ -157,7 +157,7 @@ class Util:
         x_values = function(input)
         return (dx_values - x_values) / dx
 
-class Function(Enum):
+class Function:
     RELU = Util.relu
     SOFTMAX = Util.softmax
     PASS = Util.passF
@@ -253,6 +253,8 @@ if __name__ == "__main__":
     import pandas, time
     layers = [
         Layer(86, 43, Activation(Function.RELU)),
+        Layer(86, 86, Activation(Function.RELU)),
+        Layer(86, 86, Activation(Function.RELU)),
         Layer(48, 86, Activation(Function.RELU)),
         Layer(7, 48, Activation(Function.SOFTMAX))
     ]

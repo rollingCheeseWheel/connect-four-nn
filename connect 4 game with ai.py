@@ -129,7 +129,7 @@ while running:
                         pred = sorted(pred, key=lambda x: x[1], reverse=True) # sort in descending order
                         for (col, percentage) in pred:
                             if isFreeColumn(col):
-                                player = change_value_row(col, 2)
+                                player = change_value_row(col, player)
                                 win_detection(player)
                                 update_board()
                             #   print(board)
