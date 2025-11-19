@@ -11,7 +11,7 @@ RADIUS = 40
 PADDING = 50
 SCREEN_WIDTH = COLUMN_COUNT * SQUARESIZE + PADDING * 1.5
 SCREEN_HEIGHT = ROW_COUNT * SQUARESIZE + PADDING  * 1.5
-MODEL_NAME = "connectFour3Layered.pickle" # "connectFour.pickle"
+MODEL_NAME = "csharptrained.pickle" # "connectFour.pickle"
 PLAY_AGAINST_AI = True
 
 board = numpy.zeros((ROW_COUNT,COLUMN_COUNT)) #start werte
@@ -22,6 +22,9 @@ player = 1
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 screen.fill((127, 127, 127))
 pygame.draw.rect(screen, (10, 10, 255), pygame.Rect(PADDING/2, PADDING/2, SCREEN_WIDTH-PADDING, SCREEN_HEIGHT-PADDING)) #outline
+
+def isFreeColumn(col: int) -> bool:
+    return board[0][col] == 0
 
 def change_value_row(col, player):
     for rowrn in range(ROW_COUNT - 1, -1, -1):  #for loop von unterster reihe
@@ -109,9 +112,10 @@ while running:
                 col = (x - PADDING) // SQUARESIZE
 
                 player = change_value_row(col, player)
+                print("player: " + str(player))
                 win_detection(player)
                 update_board()
-                print(board)
+                #print(board)
                 if win_detection(player):
                     time.sleep(3)
                     pygame.quit()
@@ -121,13 +125,15 @@ while running:
                 if PLAY_AGAINST_AI:
                     if player == 2: #ai player
                         pred = model.forward([cell for row in board for cell in row] + [player])
-                        maxPred = numpy.max(pred)
-                        bestCol = [i for i in range(pred.__len__()) if pred[i] == maxPred][0]
-                        change_value_row(bestCol, player)
-                        win_detection(player)
-                        update_board()
-                        #   print(board)
-                        player = 1
+                        pred = [(i, pred[i]) for i in range(pred.__len__())]
+                        pred = sorted(pred, key=lambda x: x[1], reverse=True) # sort in descending order
+                        for (col, percentage) in pred:
+                            if isFreeColumn(col):
+                                player = change_value_row(col, 2)
+                                win_detection(player)
+                                update_board()
+                            #   print(board)
+                                break
                         if win_detection(player):
                             time.sleep(3)
                             pygame.quit()
